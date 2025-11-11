@@ -6,7 +6,6 @@ import OutputDisplay from './components/OutputDisplay';
 
 const App: React.FC = () => {
   const [projectIdea, setProjectIdea] = useState<string>('');
-  const [technologies, setTechnologies] = useState<string>('');
   const [output, setOutput] = useState<Record<string, string> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isRefining, setIsRefining] = useState<boolean>(false);
@@ -41,7 +40,7 @@ const App: React.FC = () => {
         ];
         
         const promises = types.map(type => 
-            generateContent(projectIdea, technologies, type)
+            generateContent(projectIdea, type)
                 .then(result => {
                     if (result.startsWith('An error occurred')) {
                         return Promise.reject(new Error(result));
@@ -80,7 +79,7 @@ const App: React.FC = () => {
     } finally {
         setIsLoading(false);
     }
-  }, [projectIdea, technologies]);
+  }, [projectIdea]);
 
   const handleRefine = useCallback(async () => {
     if (!projectIdea) return;
@@ -132,19 +131,6 @@ const App: React.FC = () => {
                 onChange={(e) => setProjectIdea(e.target.value)}
                 rows={5}
                 placeholder="Describe your idea in as much detail as possible, or just add some keywords and click 'Refine with AI'..."
-                className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
-              />
-            </div>
-            <div>
-              <label htmlFor="technologies" className="block text-sm font-medium text-gray-300 mb-2">
-                Technologies (optional)
-              </label>
-              <input
-                id="technologies"
-                type="text"
-                value={technologies}
-                onChange={(e) => setTechnologies(e.target.value)}
-                placeholder="React, Firebase... or paste a public GitHub repo URL"
                 className="w-full p-3 bg-gray-900 border border-gray-700 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
               />
             </div>

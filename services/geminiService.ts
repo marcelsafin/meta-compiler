@@ -1,4 +1,3 @@
-
 import { GoogleGenAI } from "@google/genai";
 import { GenerationType } from '../types';
 
@@ -8,7 +7,7 @@ if (!process.env.API_KEY) {
 
 const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
 
-const buildMasterPrompt = (projectIdea: string, technologies: string, generationType: GenerationType): string => {
+const buildMasterPrompt = (projectIdea: string, generationType: GenerationType): string => {
     let taskInstruction = '';
 
     switch (generationType) {
@@ -40,37 +39,6 @@ const buildMasterPrompt = (projectIdea: string, technologies: string, generation
             throw new Error("Invalid generation type");
     }
 
-    const isGitHubUrl = (str: string): boolean => {
-        const githubRegex = /^(https?:\/\/)?(www\.)?github\.com\/.+\/.+/;
-        return githubRegex.test(str.trim());
-    };
-
-    let techSection = '';
-    if (technologies.trim() === '') {
-        techSection = `
-            Technologies used:
-            ---
-            (Not specified by user)
-            ---
-        `;
-    } else if (isGitHubUrl(technologies)) {
-        techSection = `
-            The user has provided a public GitHub repository as context. Analyze the repository's main page (README, description, language breakdown) to understand the technology stack.
-            **Important:** Base your description of the technology **only** on what is clearly identifiable from the repository's main page. Do not infer or hallucinate languages or frameworks that are not present. If the technology stack is not clear, it is better to be generic than to be incorrect.
-            The repository is at:
-            ---
-            ${technologies}
-            ---
-        `;
-    } else {
-        techSection = `
-            Technologies used:
-            ---
-            ${technologies}
-            ---
-        `;
-    }
-
     return `
         You are an expert assistant. Your goal is to help a user prepare their hackathon project.
 
@@ -78,15 +46,15 @@ const buildMasterPrompt = (projectIdea: string, technologies: string, generation
         ---
         ${projectIdea}
         ---
-        ${techSection}
+
         Based on the information above, perform the following task:
         ${taskInstruction}
     `;
 };
 
-export const generateContent = async (projectIdea: string, technologies: string, generationType: GenerationType): Promise<string> => {
+export const generateContent = async (projectIdea: string, generationType: GenerationType): Promise<string> => {
     try {
-        const prompt = buildMasterPrompt(projectIdea, technologies, generationType);
+        const prompt = buildMasterPrompt(projectIdea, generationType);
         
         const response = await ai.models.generateContent({
             model: 'gemini-2.5-flash',
