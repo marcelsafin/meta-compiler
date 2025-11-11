@@ -9,9 +9,10 @@ declare global {
 
 interface MermaidDiagramProps {
   chart: string;
+  onSvgRendered?: (svg: string) => void;
 }
 
-const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart }) => {
+const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart, onSvgRendered }) => {
   const [id] = useState(`mermaid-diagram-${Math.random().toString(36).substr(2, 9)}`);
   const [svgContent, setSvgContent] = useState('');
   const [error, setError] = useState('');
@@ -25,17 +26,23 @@ const MermaidDiagram: React.FC<MermaidDiagramProps> = ({ chart }) => {
                 // The render function needs a valid ID and the chart definition
                 const { svg } = await window.mermaid.render(id, chart);
                 setSvgContent(svg);
+                if (onSvgRendered) {
+                    onSvgRendered(svg);
+                }
                 setError('');
             } catch (e: any) {
                 console.error("Mermaid rendering error:", e);
                 setError('Could not render diagram. The generated code might be invalid.');
                 setSvgContent('');
+                if (onSvgRendered) {
+                    onSvgRendered('');
+                }
             }
         };
 
         renderDiagram();
     }
-  }, [chart, id]);
+  }, [chart, id, onSvgRendered]);
 
   if (error) {
     return (

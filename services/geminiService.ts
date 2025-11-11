@@ -28,25 +28,36 @@ const buildMasterPrompt = (projectIdea: string, generationType: GenerationType, 
             break;
         case GenerationType.DIAGRAM:
              taskInstruction = `
-                **Task: Generate a Mermaid diagram.**
-                Act as an expert in software architecture. Based on the project idea and technical architecture, generate a **syntactically correct** Mermaid flowchart diagram.
+                **Task: Generate a simple Mermaid diagram.**
+                Act as an expert in software architecture. Create a **high-level, clean, and simple** Mermaid flowchart diagram based on the project idea and technical architecture.
                 - The diagram MUST be a flowchart (graph TD).
-                - **Use subgraphs to logically group related components.** For example, create subgraphs for "User Interface", "Backend Services", "Database", "Authentication", and "External APIs".
-                - Use clear and concise labels for nodes. Use syntax like A["Label for A"].
-                - Show the data flow and interactions between components with arrows.
-                - Wrap the final output in a single Mermaid code block.
-                - Do NOT add any explanations or text outside of the final Mermaid code block. Your entire response should only be the code block.
+                - **Focus only on the main components and their core relationships. Avoid excessive detail, numbered steps, or complex data flow descriptions.**
+                - Use subgraphs to logically group components (e.g., "UI", "Backend", "Database").
+                - Use clear and concise labels for nodes.
+                - Your entire response must only be the Mermaid code block. Do not add any other text.
 
-                Example of subgraph usage:
+                Example of a simple diagram:
                 \`\`\`mermaid
                 graph TD
-                    subgraph "Client"
-                        A["User"] --> B["React App"];
+                    subgraph "User Interface"
+                        ui["React Frontend"]
                     end
-                    subgraph "Server"
-                        B --> C["Node.js API"];
-                        C --> D["PostgreSQL DB"];
+                    
+                    subgraph "Backend Services"
+                        api["Node.js API"]
                     end
+                    
+                    subgraph "Data Storage"
+                        db["PostgreSQL Database"]
+                    end
+                    
+                    subgraph "Authentication"
+                        auth["Firebase Auth"]
+                    end
+                    
+                    ui --> api
+                    api --> db
+                    ui -- "Authenticates" --> auth
                 \`\`\`
             `;
             break;
