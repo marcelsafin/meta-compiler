@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { generateContent, refineProjectIdea } from './services/geminiService';
+import { generateContent, refineProjectIdea, generateTechStack } from './services/geminiService';
 import { GenerationType } from './types';
 import Button from './components/Button';
 import OutputDisplay from './components/OutputDisplay';
@@ -8,6 +8,7 @@ const App: React.FC = () => {
   const [projectIdea, setProjectIdea] = useState<string>('');
   const [output, setOutput] = useState<Record<string, string> | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [isRefining, setIsRefining] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [progress, setProgress] = useState<Record<string, 'pending' | 'done'>>({});
@@ -21,8 +22,6 @@ const App: React.FC = () => {
     setOutput(null);
     setError(null);
     
-    // FIX: Explicitly type `initialProgress` to match the state's type.
-    // This resolves a TypeScript error where the value 'pending' was inferred as a generic `string`.
     const initialProgress: Record<string, 'pending' | 'done'> = {
         [GenerationType.DESCRIPTION]: 'pending',
         [GenerationType.DIAGRAM]: 'pending',
@@ -32,6 +31,16 @@ const App: React.FC = () => {
     setProgress(initialProgress);
 
     try {
+        setLoadingMessage('Analyzing project idea and proposing tech stack...');
+        const techStack = await generateTechStack(projectIdea);
+        
+        // Check if techStack generation failed
+        if (typeof techStack === 'string' && techStack.startsWith('An error occurred')) {
+            throw new Error(techStack);
+        }
+
+        setLoadingMessage('Generating all assets...');
+
         const types: GenerationType[] = [
           GenerationType.DESCRIPTION, 
           GenerationType.DIAGRAM, 
@@ -40,7 +49,7 @@ const App: React.FC = () => {
         ];
         
         const promises = types.map(type => 
-            generateContent(projectIdea, type)
+            generateContent(projectIdea, type, techStack as Record<string, any>)
                 .then(result => {
                     if (result.startsWith('An error occurred')) {
                         return Promise.reject(new Error(result));
@@ -55,7 +64,7 @@ const App: React.FC = () => {
         const finalOutput: Record<string, string> = {};
         let firstError: string | null = null;
 
-        settledResults.forEach((item, index) => {
+        settledResults.forEach((item) => {
             if (item.status === 'fulfilled') {
                 finalOutput[item.value.type] = item.value.result;
             } else {
@@ -74,10 +83,11 @@ const App: React.FC = () => {
 
     } catch (e) {
         const errorMessage = e instanceof Error ? e.message : "An unknown error occurred during setup.";
-        setError(`Failed to start generation: ${errorMessage}`);
+        setError(`Failed to generate: ${errorMessage}`);
         setOutput(null);
     } finally {
         setIsLoading(false);
+        setLoadingMessage('');
     }
   }, [projectIdea]);
 
@@ -138,7 +148,7 @@ const App: React.FC = () => {
           
           <div className="mt-8 border-t border-gray-700 pt-8">
              <Button onClick={handleGenerateAll} disabled={isLoading || isRefining || !projectIdea} icon={<IconMagic/>}>
-                {isLoading ? 'Generating...' : 'Generate All Assets'}
+                {isLoading ? loadingMessage : 'Generate All Assets'}
             </Button>
           </div>
         
