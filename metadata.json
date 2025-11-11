@@ -1,0 +1,5 @@
+{
+  "name": "The Meta-Compiler",
+  "description": "An app that uses Gemini to generate project descriptions, Mermaid diagrams, demo scripts, and social media posts based on a project idea and technologies.",
+  "requestFramePermissions": []
+}
