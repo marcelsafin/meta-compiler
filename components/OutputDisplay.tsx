@@ -9,24 +9,64 @@ interface OutputDisplayProps {
   progress: Record<string, 'pending' | 'done'>;
 }
 
-// Icons
-const IconDescription = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm2 1a1 1 0 011-1h6a1 1 0 011 1v1a1 1 0 01-1 1H7a1 1 0 01-1-1V5z" clipRule="evenodd" /></svg>;
-const IconDiagram = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM14 11a1 1 0 011 1v1h1a1 1 0 110 2h-1v1a1 1 0 11-2 0v-1h-1a1 1 0 110-2h1v-1a1 1 0 011-1z" /></svg>;
-const IconScript = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M2 5a2 2 0 012-2h12a2 2 0 012 2v10a2 2 0 01-2 2H4a2 2 0 01-2-2V5zm3.293 1.293a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 01-1.414-1.414L7.586 10 5.293 7.707a1 1 0 010-1.414zM11 7a1 1 0 100 2h3a1 1 0 100-2h-3z" clipRule="evenodd" /></svg>;
-const IconSocial = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" viewBox="0 0 20 20" fill="currentColor"><path d="M10 2a4 4 0 00-3.32 1.536.5.5 0 00.82.528A3 3 0 0110 3a3 3 0 012.5 1.064.5.5 0 00.82-.528A4 4 0 0010 2zM6.68 3.536a.5.5 0 00-.82-.528A4 4 0 002 6.32V10a2 2 0 002 2h12a2 2 0 002-2V6.32a4 4 0 00-4.68-3.312.5.5 0 00-.82.528A3 3 0 0114 6.32V8a1 1 0 01-1 1H7a1 1 0 01-1-1V6.32a3 3 0 011.68-2.784zM16 14a1 1 0 100 2h-1.586l-1.707 1.707A1 1 0 0111 17.086V16H9v1.086a1 1 0 01-1.707.707L5.586 16H4a1 1 0 100 2h12z" /></svg>;
-const IconCheck = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>;
-const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path d="M8 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" /><path d="M6 3a2 2 0 00-2 2v11a2 2 0 002 2h8a2 2 0 002-2V5a2 2 0 00-2-2 3 3 0 01-3 3H9a3 3 0 01-3-3z" /></svg>;
-const IconDownload = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fillRule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd" /></svg>;
-const IconSpinner = () => <div className="w-5 h-5 border-2 border-dashed rounded-full animate-spin border-gray-400"></div>;
+// Icons - Cleaned up and modernized
+const IconTechStack = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 6.878V6a2.25 2.25 0 012.25-2.25h7.5A2.25 2.25 0 0118 6v.878m-12 0c.235-.083.487-.128.75-.128h10.5c.263 0 .515.045.75.128m-12 0A2.25 2.25 0 004.5 9v.878m13.5-3A2.25 2.25 0 0119.5 9v.878m0 0a2.246 2.246 0 00-.75-.128H5.25c-.263 0-.515.045-.75.128m15 0A2.25 2.25 0 0121 12v6a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18v-6c0-.98.626-1.813 1.5-2.122" /></svg>;
+const IconDescription = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>;
+const IconDiagram = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 8.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 018.25 20.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25h-2.25a2.25 2.25 0 01-2.25-2.25v-2.25z" /></svg>;
+const IconScript = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6.75 7.5l3 2.25-3 2.25m4.5 0h3m-9 8.25h13.5A2.25 2.25 0 0021 18V6a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 6v12a2.25 2.25 0 002.25 2.25z" /></svg>;
+const IconSocial = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.186 2.25 2.25 0 00-3.933 2.186z" /></svg>;
+const IconCheck = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>;
+const IconCopy = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 01-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 011.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 00-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 01-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 00-3.375-3.375h-1.5a1.125 1.125 0 01-1.125-1.125v-1.5a3.375 3.375 0 00-3.375-3.375H9.75" /></svg>;
+const IconDownload = () => <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3" /></svg>;
+const IconSpinner = () => <svg className="animate-spin h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>;
 
 const OUTPUT_ORDER: [GenerationType, string, React.ReactNode][] = [
+    [GenerationType.TECH_STACK, 'Technical Architecture', <IconTechStack/>],
     [GenerationType.DESCRIPTION, 'Description', <IconDescription/>],
     [GenerationType.DIAGRAM, 'Diagram', <IconDiagram/>],
-    [GenerationType.SCRIPT, 'Manus', <IconScript/>],
+    [GenerationType.SCRIPT, 'Script', <IconScript/>],
     [GenerationType.SOCIAL, 'Social Post', <IconSocial/>],
 ];
 
-const CopyButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
+const formatTechStack = (jsonString: string): string => {
+    try {
+        const data = JSON.parse(jsonString);
+        let formatted = '';
+
+        const formatSection = (title: string, content: any) => {
+            if (!content) return '';
+            let section = `### ${title}\n`;
+            if (content.technology) {
+                section += `**Technology:** ${content.technology}\n`;
+            }
+            if (content.description) {
+                section += `**Description:** ${content.description}\n`;
+            }
+            return section + '\n';
+        };
+
+        if (data.frontend) formatted += formatSection('Frontend', data.frontend);
+        if (data.backend) formatted += formatSection('Backend', data.backend);
+        if (data.database) formatted += formatSection('Database', data.database);
+        if (data.authentication) formatted += formatSection('Authentication', data.authentication);
+
+        if (data.other_services && data.other_services.length > 0) {
+            formatted += '### Other Services & APIs\n';
+            data.other_services.forEach((service: any) => {
+                if (service.name) {
+                    formatted += `- **${service.name}:** ${service.description || 'No description provided.'}\n`;
+                }
+            });
+        }
+
+        return formatted.trim().replace(/###/g, '').replace(/\*\*/g, ''); // Simple formatting for <pre>
+    } catch (error) {
+        console.error("Failed to parse or format tech stack JSON:", error);
+        return "Could not display the technical architecture. Please check the raw JSON.";
+    }
+};
+
+const CopyButton: React.FC<{ textToCopy: string, label: string }> = ({ textToCopy, label }) => {
     const [isCopied, setIsCopied] = useState(false);
   
     const handleCopy = async () => {
@@ -49,7 +89,7 @@ const CopyButton: React.FC<{ textToCopy: string }> = ({ textToCopy }) => {
         className="flex items-center px-3 py-1 text-sm font-semibold text-gray-300 bg-gray-700/50 rounded-md hover:bg-gray-600/50 transition-colors"
       >
         {isCopied ? <IconCheck /> : <IconCopy />}
-        <span className="ml-2">{isCopied ? 'Copied!' : 'Copy Code'}</span>
+        <span className="ml-2">{isCopied ? 'Copied!' : label}</span>
       </button>
     );
 };
@@ -121,6 +161,10 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading, error,
             {OUTPUT_ORDER.map(([type, title, icon]) => {
                 const rawContent = output[type] || '';
                 
+                if (!rawContent) return null;
+
+                const formattedTechStack = type === GenerationType.TECH_STACK ? formatTechStack(rawContent) : '';
+
                 return (
                     <div key={type} className="bg-gray-800 border border-gray-700 rounded-lg shadow-inner">
                         <div className="flex items-center justify-between text-lg font-semibold text-gray-200 p-4 border-b border-gray-700">
@@ -129,7 +173,21 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading, error,
                                 <span className="ml-3">{title}</span>
                             </h3>
                             <div className="flex items-center space-x-2">
-                                <CopyButton textToCopy={rawContent} />
+                               {type === GenerationType.TECH_STACK ? (
+                                    <>
+                                        <CopyButton textToCopy={formattedTechStack} label="Copy Text" />
+                                        <CopyButton textToCopy={rawContent} label="Copy JSON" />
+                                    </>
+                                ) : (
+                                    <CopyButton
+                                        textToCopy={rawContent}
+                                        label={
+                                            type === GenerationType.DESCRIPTION || type === GenerationType.SCRIPT || type === GenerationType.SOCIAL
+                                            ? 'Copy Text'
+                                            : 'Copy Code'
+                                        }
+                                    />
+                                )}
                                 {type === GenerationType.DIAGRAM && (
                                     <DownloadButton onDownload={handleDownloadSvg} disabled={!diagramSvg} />
                                 )}
@@ -138,6 +196,8 @@ const OutputDisplay: React.FC<OutputDisplayProps> = ({ output, isLoading, error,
                         <div className="p-4 overflow-x-auto">
                            {type === GenerationType.DIAGRAM ? (
                               <MermaidDiagram chart={rawContent} onSvgRendered={setDiagramSvg} />
+                           ) : type === GenerationType.TECH_STACK ? (
+                              <pre className="whitespace-pre-wrap font-sans text-gray-300">{formattedTechStack}</pre>
                            ) : (
                               <pre className="whitespace-pre-wrap font-sans text-gray-300">{rawContent}</pre>
                            )}

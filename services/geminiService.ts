@@ -34,17 +34,18 @@ const buildMasterPrompt = (projectIdea: string, generationType: GenerationType, 
                 - **Focus only on the main components and their core relationships. Avoid excessive detail, numbered steps, or complex data flow descriptions.**
                 - Use subgraphs to logically group components (e.g., "UI", "Backend", "Database").
                 - Use clear and concise labels for nodes.
+                - **CRITICAL RULE:** If a node's text label contains special characters (like parentheses, periods, or commas), you MUST enclose the entire text label in double quotes. For example, use \`api["Node.js (Express) API"]\` instead of \`api[Node.js (Express) API]\`.
                 - Your entire response must only be the Mermaid code block. Do not add any other text.
 
                 Example of a simple diagram:
                 \`\`\`mermaid
                 graph TD
                     subgraph "User Interface"
-                        ui["React Frontend"]
+                        ui["React Frontend (Vite)"]
                     end
                     
                     subgraph "Backend Services"
-                        api["Node.js API"]
+                        api["Node.js (Express) API"]
                     end
                     
                     subgraph "Data Storage"
@@ -63,8 +64,29 @@ const buildMasterPrompt = (projectIdea: string, generationType: GenerationType, 
             break;
         case GenerationType.SCRIPT:
             taskInstruction = `
-                **Task: Generate a demo script.**
-                Act as an expert in creating scripts for technical demonstrations. Write a short and impactful script for a 2-minute demo of the project. Include both what should be said and what is shown on the screen, referencing components from the technical architecture where appropriate. Structure it clearly, for example with "Speaker:" and "Visual:". Base the script on the project idea.
+                **Task: Generate a clean demo script.**
+                Act as an expert in creating scripts for technical demonstrations. Write a short and impactful script for a 2-minute demo of the project.
+                - Structure the script into logical sections with clear headings and approximate timestamps.
+                - For each section, provide a narrative that describes both the spoken words and the on-screen visuals in a clean, readable paragraph.
+                - Do NOT use prefixes like "Speaker:" or "Visual:".
+                - The tone should be professional yet engaging.
+                - Reference components from the technical architecture where appropriate.
+                - Base the script on the project idea.
+
+                Example of the desired format:
+                ---
+                **(0:00 - 0:15) Introduction & Problem Statement**
+                The presenter opens with the project's logo on screen and introduces the problem the project solves. They'll state the core pain point clearly and concisely, setting the stage for the solution.
+
+                **(0:15 - 0:45) Unveiling the Solution**
+                The screen transitions to the main dashboard of the application. The presenter walks through the core feature, explaining how it directly addresses the problem mentioned earlier. They highlight the clean UI and intuitive design.
+
+                **(0:45 - 1:30) Core Demo**
+                This section is a live walkthrough of the main workflow. The presenter demonstrates creating a new item, interacting with the key features (e.g., using the React frontend to call the Node.js API), and shows the results updating in real-time in the database.
+
+                **(1:30 - 2:00) Vision & Closing**
+                The presenter summarizes the key benefits shown in the demo. They briefly mention the technology stack (e.g., "Built with React, FastAPI, and running on Google Cloud") and future plans for the project. The final screen shows the project logo and contact information.
+                ---
             `;
             break;
         case GenerationType.SOCIAL:

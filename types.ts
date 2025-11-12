@@ -1,5 +1,6 @@
 
 export enum GenerationType {
+  TECH_STACK = 'TECH_STACK',
   DESCRIPTION = 'DESCRIPTION',
   DIAGRAM = 'DIAGRAM',
   SCRIPT = 'SCRIPT',
